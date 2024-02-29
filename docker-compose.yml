@@ -8,8 +8,11 @@ services:
     depends_on:
       - db
     volumes:
+      - .:/app
       - gems_volume:/usr/local/bundle
     command: ruby app.rb -o 0.0.0.0
+    networks:
+      - my_network
 
   db:
     image: postgres:latest
@@ -19,7 +22,12 @@ services:
       POSTGRES_DB: postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - my_network
 
 volumes:
   postgres_data:
   gems_volume:
+
+networks:
+  my_network:
