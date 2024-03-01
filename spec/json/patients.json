@@ -1,0 +1,24 @@
+[
+  {
+    "id": 1,
+    "cpf": "123.456.789-10",
+    "name": "João da Silva",
+    "email": "joao@example.com",
+    "birthday": "1990-05-15",
+    "address": "Rua A, 123",
+    "city": "São Paulo",
+    "state": "SP",
+    "medical_crm": "CRM12345"
+  },
+  {
+    "id": 2,
+    "cpf": "987.654.321-98",
+    "name": "Maria Souza",
+    "email": "maria@example.com",
+    "birthday": "1985-10-20",
+    "address": "Avenida B, 456",
+    "city": "Rio de Janeiro",
+    "state": "RJ",
+    "medical_crm": "CRM54321"
+  }
+]

@@ -1,9 +1,19 @@
+# spec_helper.rb
 require 'simplecov'
 SimpleCov.start do
   add_filter '/spec/'
 end
 
-RSpec.configure do |config| 
+require 'rack/test'
+require_relative '../app'
+
+RSpec.configure do |config|
+  config.include Rack::Test::Methods
+
+  def app
+    Sinatra::Application
+  end
+
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
