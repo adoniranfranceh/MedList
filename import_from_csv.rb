@@ -1,9 +1,18 @@
 require 'pg'
 require 'csv'
 
+DB_PARAMS = {
+  dbname: 'postgres',
+  user: 'postgres',
+  password: 'postgres',
+  host: 'db'
+}.freeze
+
+TABLE_NAME = 'patients'.freeze
+
 def table_exists?(conn, table_name)
   result = conn.exec("SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = '#{table_name}');")
-  result.dig(0, 'exists') == 't'
+  result.getvalue(0, 0) == 't'
 end
 
 def create_table(conn)
@@ -11,23 +20,27 @@ def create_table(conn)
 end
 
 def import_from_csv(file_path)
-  conn = PG.connect(dbname: 'postgres', user: 'postgres', password: 'postgres', host: 'db')
+  conn = PG.connect(DB_PARAMS)
 
   begin
-    unless table_exists?(conn, 'patients')
-      create_table(conn)
-    end
+    create_table(conn) unless table_exists?(conn, TABLE_NAME)
 
     CSV.foreach(file_path, headers: true, col_sep: ';') do |row|
       next if cpf_exists?(conn, row['cpf'])
-      puts row['cpf']
-      puts row.class
-      conn.exec_params('INSERT INTO patients (cpf, nome, email, data_nascimento, endereco, cidade, estado, crm_medico) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)', [row['cpf'], row['nome paciente'], row['email paciente'], row['data nascimento paciente'], row['endereço/rua paciente'], row['cidade paciente'], row['estado paciente'], row['crm médico']])
 
+      conn.exec_params('INSERT INTO patients (cpf, name, email, birthday, address, city, state, medical_crm) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)', [
+        row['cpf'],
+        row['nome paciente'],
+        row['email paciente'],
+        row['data nascimento paciente'],
+        row['endereço/rua paciente'],
+        row['cidade paciente'],
+        row['estado paciente'],
+        row['crm médico']
+      ])
     end
     puts "Dados importados com sucesso!"
   rescue PG::Error => e
-    puts "Erro ao executar a operação no banco de dados: #{e.message}"
   ensure
     conn.close if conn
   end
@@ -40,4 +53,3 @@ def cpf_exists?(conn, cpf)
 end
 
 import_from_csv('data/data.csv')
-;paciente;;cidade paciente;estado patiente;crm médico;crm médico estado

@@ -21,13 +21,13 @@ def create_table
       CREATE TABLE IF NOT EXISTS public.patients (
         id SERIAL PRIMARY KEY,
         cpf VARCHAR(14) NOT NULL,
-        nome VARCHAR(255) NOT NULL,
+        name VARCHAR(255) NOT NULL,
         email VARCHAR(255),
-        data_nascimento DATE NOT NULL,
-        endereco VARCHAR(255),
-        cidade VARCHAR(100),
-        estado VARCHAR(2),
-        crm_medico VARCHAR(20)
+        birthday DATE NOT NULL,
+        address VARCHAR(255),
+        city VARCHAR(100),
+        state VARCHAR(2),
+        medical_crm VARCHAR(20)
       );
     SQL
     puts "Tabela 'patients' criada com sucesso!"
