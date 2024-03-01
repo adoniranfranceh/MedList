@@ -1,6 +1,6 @@
 require 'sinatra'
 require 'pg'
-require_relative 'model/patients'
+require_relative 'model/patient'
 
 get '/tests' do
   content_type :json

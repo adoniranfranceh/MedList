@@ -1,5 +1,17 @@
-
 class Patient
+  attr_reader :id, :cpf, :name, :email, :birthday, :address, :city, :state, :medical_crm
+
+  def initialize(id:, cpf:, name:, email:, birthday:, address:, city:, state:, medical_crm:)
+    @id = id
+    @cpf = cpf
+    @name = name
+    @email = email
+    @birthday = birthday
+    @address = address
+    @city = city
+    @state = state
+    @medical_crm = medical_crm
+  end
 
   def self.all
     conn = PG.connect(dbname: 'postgres', user: 'postgres', password: 'postgres', host: 'db')
@@ -21,19 +33,6 @@ class Patient
 
     conn.close
     patients
-  end
-  attr_reader :id, :cpf, :name, :email, :birthday, :address, :city, :state, :medical_crm
-
-  def initialize(id:, cpf:, name:, email:, birthday:, address:, city:, state:, medical_crm:)
-    @id = id
-    @cpf = cpf
-    @name = name
-    @email = email
-    @birthday = birthday
-    @address = address
-    @city = city
-    @state = state
-    @medical_crm = medical_crm
   end
 
   def to_hash
