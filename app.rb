@@ -9,9 +9,9 @@ get '/tests' do
   data = result.map { |row| row.to_h }
 
   content_type :json
-  data.to_json
+  { patients: data }.to_json
 end
 
 get '/' do
-  'Olá, acesse /tests para obter a lista'
+  'Olá, acesse <a href="/tests">aqui</a> para obter a lista.'
 end
