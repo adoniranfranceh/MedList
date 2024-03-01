@@ -4,7 +4,7 @@ require 'pg'
 conn = PG.connect(dbname: 'postgres', user: 'postgres', password: 'postgres', host: 'db')
 
 get '/tests' do
-  result = conn.exec("SELECT * FROM USERS")
+  result = conn.exec("SELECT * FROM patients")
 
   data = result.map { |row| row.to_h }
 
