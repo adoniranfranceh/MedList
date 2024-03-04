@@ -39,13 +39,13 @@ class Patient
     {
       id: @id,
       cpf: @cpf,
-      nome: @name,
+      name: @name,
       email: @email,
-      data_nascimento: @birthday,
-      endereco: @address,
-      cidade: @city,
-      estado: @state,
-      crm_medico: @medical_crm
+      birthday: @birthday,
+      address: @address,
+      city: @city,
+      state: @state,
+      medical_crm: @medical_crm
     }
   end
 end

@@ -19,8 +19,8 @@ def create_table(conn)
   load 'create_tables.rb'
 end
 
-def import_from_csv(file_path)
-  conn = PG.connect(DB_PARAMS)
+def import_from_csv(file_path, conn)
+  p 'droga'
 
   begin
     create_table(conn) unless table_exists?(conn, TABLE_NAME)
@@ -52,4 +52,4 @@ def cpf_exists?(conn, cpf)
   count > 0
 end
 
-import_from_csv('data/data.csv')
+import_from_csv('data/data.csv', PG.connect(DB_PARAMS))

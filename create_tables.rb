@@ -1,21 +1,22 @@
 require 'pg'
 
-def create_schema
-  conn = PG.connect(dbname: 'postgres', user: 'postgres', password: 'postgres', host: 'db')
+DB_PARAMS = {
+  dbname: 'postgres',
+  user: 'postgres',
+  password: 'postgres',
+  host: 'db'
+}.freeze
 
+def create_schema(conn)
   begin
     conn.exec("CREATE SCHEMA IF NOT EXISTS public;")
     puts "Esquema 'public' criado com sucesso!"
   rescue PG::Error => e
     puts "Erro ao criar o esquema 'public': #{e.message}"
-  ensure
-    conn.close if conn
   end
 end
 
-def create_table
-  conn = PG.connect(dbname: 'postgres', user: 'postgres', password: 'postgres', host: 'db')
-
+def create_table(conn)
   begin
     conn.exec <<-SQL
       CREATE TABLE IF NOT EXISTS public.patients (
@@ -33,10 +34,10 @@ def create_table
     puts "Tabela 'patients' criada com sucesso!"
   rescue PG::Error => e
     puts "Erro ao executar a operação no banco de dados: #{e.message}"
-  ensure
-    conn.close if conn
   end
 end
 
-create_schema
-create_table
+conn = PG.connect(DB_PARAMS)
+create_schema(conn)
+create_table(conn)
+conn.close

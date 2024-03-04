@@ -25,13 +25,6 @@ services:
     networks:
       - my_network
 
-  db_test:
-    image: postgres:latest
-    environment:
-      POSTGRES_DB: myapp_test
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-
 volumes:
   postgres_data:
   gems_volume:
