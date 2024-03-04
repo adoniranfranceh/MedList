@@ -6,3 +6,12 @@ development:
   password: postgres
   host: db
   port: 5432
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: myapp_test
+  username: postgres
+  password: postgres
+  host: db
+  port: 5432
