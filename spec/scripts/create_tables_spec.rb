@@ -20,6 +20,8 @@ describe 'create_tables' do
     it 'cria a tabela de pacientes se ela não existir' do
       conn = double('PG::Connection')
       allow(conn).to receive(:exec).with(/CREATE TABLE IF NOT EXISTS public.patients/).and_return(nil)
+      allow(conn).to receive(:exec).and_return(nil)
+
       expect { create_table(conn) }.not_to raise_error
       expect { create_table(conn) }.to output(/Tabela 'patients' criada com sucesso!/).to_stdout
     end

@@ -37,7 +37,12 @@ def create_table(conn)
   end
 end
 
+def schema_exists?(conn, schema_name)
+  result = conn.exec("SELECT EXISTS (SELECT 1 FROM information_schema.schemata WHERE schema_name = '#{schema_name}');")
+  result.getvalue(0, 0) == 't'
+end
+
 conn = PG.connect(DB_PARAMS)
-create_schema(conn)
+create_schema(conn) unless schema_exists?(conn, 'public')
 create_table(conn)
 conn.close
