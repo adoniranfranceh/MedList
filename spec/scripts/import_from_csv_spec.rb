@@ -1,5 +1,5 @@
 require 'pg'
-require_relative '../../import_from_csv'
+require_relative '../../app/back/import_from_csv'
 
 describe 'table_exists?' do
   it 'retorna true se a tabela existir no banco de dados' do

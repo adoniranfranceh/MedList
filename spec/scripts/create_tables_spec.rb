@@ -1,4 +1,4 @@
-require_relative '../../create_tables'
+require_relative '../../app/back/create_tables'
 
 describe 'create_tables' do
   describe '#create_schema' do

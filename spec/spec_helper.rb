@@ -6,7 +6,7 @@ SimpleCov.start do
 end
 
 require 'rack/test'
-require_relative '../app'
+require_relative '../app/back/app'
 
 RSpec.configure do |config|
   config.include Rack::Test::Methods

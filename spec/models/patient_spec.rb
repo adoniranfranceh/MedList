@@ -1,4 +1,4 @@
-require_relative '../../models/patient'
+require_relative '../../app/back/models/patient'
 
 describe Patient do
   describe '#initialize' do

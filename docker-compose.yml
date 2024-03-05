@@ -10,7 +10,7 @@ services:
     volumes:
       - .:/app
       - gems_volume:/usr/local/bundle
-    command: ruby app.rb -o 0.0.0.0
+    command: ruby app/back/app.rb -o 0.0.0.0
     networks:
       - my_network
 
