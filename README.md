@@ -50,24 +50,24 @@ Após iniciar os contêineres, você pode acessar a lista de pacientes em [http:
     {
       "id": 1,
       "cpf": "123.456.789-10",
-      "nome": "João da Silva",
+      "name": "João da Silva",
       "email": "joao@example.com",
-      "data_nascimento": "1990-05-15",
-      "endereco": "Rua A, 123",
-      "cidade": "São Paulo",
-      "estado": "SP",
-      "crm_medico": "CRM12345"
+      "birthday": "1990-05-15",
+      "address": "Rua A, 123",
+      "city": "São Paulo",
+      "state": "SP",
+      "medical_crm": "CRM12345"
     },
     {
       "id": 2,
       "cpf": "987.654.321-98",
-      "nome": "Maria Souza",
+      "name": "Maria Souza",
       "email": "maria@example.com",
-      "data_nascimento": "1985-10-20",
-      "endereco": "Avenida B, 456",
-      "cidade": "Rio de Janeiro",
-      "estado": "RJ",
-      "crm_medico": "CRM54321"
+      "birthday": "1985-10-20",
+      "address": "Avenida B, 456",
+      "city": "Rio de Janeiro",
+      "state": "RJ",
+      "medical_crm": "CRM54321"
     }
   ]
 }
