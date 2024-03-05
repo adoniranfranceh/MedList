@@ -14,6 +14,17 @@ services:
     networks:
       - my_network
 
+  app_front:
+    build: .
+    ports:
+      - "3000:4567"
+    volumes:
+      - .:/app
+      - gems_volume:/usr/local/bundle
+    command: ruby app/front/app.rb -o 0.0.0.0
+    networks:
+      - my_network
+
   db:
     image: postgres:latest
     environment:
