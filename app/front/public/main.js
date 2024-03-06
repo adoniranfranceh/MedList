@@ -3,6 +3,7 @@ window.onload = () => {
   const patientList = document.getElementById('patient-list');
   const patientDetails = document.getElementById('patient-details');
   const backButton = document.getElementById('back-button');
+  const searchInput = document.getElementById('search-input');
   const patientName = document.getElementById('patient-name');
   const patientCpf = document.getElementById('patient-cpf');
   const patientEmail = document.getElementById('patient-email');
@@ -28,6 +29,26 @@ window.onload = () => {
   };
 
   backButton.addEventListener('click', goBackToList);
+
+  searchInput.addEventListener('input', () => {
+    const searchTerm = searchInput.value.trim();
+
+    fetch(`${url}?search=${encodeURIComponent(searchTerm)}`)
+      .then(response => response.json())
+      .then(data => {
+        patientList.innerHTML = '';        data.patients.forEach(patient => {
+          const li = document.createElement('li');
+          li.textContent = patient.name;
+          li.addEventListener('click', () => {
+            showPatientDetails(patient);
+          });
+          patientList.appendChild(li);
+        });
+      })
+      .catch(error => {
+        console.error('Erro ao buscar resultados da pesquisa:', error);
+      });
+  });
 
   fetch(url)
     .then(response => response.json())
