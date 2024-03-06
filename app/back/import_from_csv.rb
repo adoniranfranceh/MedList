@@ -14,7 +14,7 @@ def import_from_csv(file_path, conn)
 
   begin
     CSV.foreach(file_path, headers: true, col_sep: ';') do |row|
-      next unless cpf_exists?(conn, row['cpf'])
+      next if cpf_exists?(conn, row['cpf'])
       insert_patient(conn, row)
     end
     puts "Dados importados com sucesso!"
