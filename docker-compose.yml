@@ -36,6 +36,15 @@ services:
     networks:
       - my_network
 
+  db_test:
+    image: postgres
+    environment:
+      POSTGRES_DB: myapp_test
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    networks:
+      - my_network
+
 volumes:
   postgres_data:
   gems_volume:

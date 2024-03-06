@@ -1,5 +1,6 @@
 require 'simplecov'
 require 'pg'
+ENV['RACK_ENV'] = 'test'
 
 SimpleCov.start do
   add_filter '/spec/'
@@ -7,9 +8,14 @@ end
 
 require 'rack/test'
 require_relative '../app/back/app'
+require 'reset_database'
 
 RSpec.configure do |config|
   config.include Rack::Test::Methods
+
+  config.before(:each) do
+    reset_database
+  end
 
   def app
     Sinatra::Application
