@@ -9,3 +9,8 @@ get '/main.js' do
   content_type 'application/javascript'
   File.open('app/front/main.js')
 end
+
+get '/styles.css' do
+  content_type 'text/css'
+  send_file 'app/front/styles.css'
+end

@@ -39,7 +39,7 @@ def insert_patient(conn, data)
       data['data nascimento paciente'],
       data['endereço/rua paciente'],
       data['cidade paciente'],
-      data['estado paciente'],
+      data['estado patiente'],
       data['crm médico']
     ]
   )

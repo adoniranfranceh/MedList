@@ -1,4 +1,5 @@
 require_relative '../../app/back/models/patient'
+require_relative '../../app/back/import_from_csv'
 
 describe Patient do
   describe '#initialize' do
@@ -60,7 +61,31 @@ describe Patient do
       expect(patients[1].state).to eq('RJ')
       expect(patients[1].medical_crm).to eq('CRM54321')
     end
-  end  
+  end
+
+  describe '.search' do
+    it 'pesquisa por nome do paciente' do
+      conn = double('PG connection')
+      allow(conn).to receive(:close)
+      allow(PG).to receive(:connect).and_return(conn)
+
+      file_path = File.expand_path('../json/patients.json', __dir__)
+      json_data = File.read(file_path)
+      patients_data = JSON.parse(json_data)
+      allow(conn).to receive(:exec_params).with("SELECT * FROM patients WHERE name ILIKE $1", ['%Mari%']).and_return([patients_data[1]])
+      patients = Patient.search('Mari')
+
+      expect(patients[0].id).to eq(2)
+      expect(patients[0].cpf).to eq('987.654.321-98')
+      expect(patients[0].name).to eq('Maria Souza')
+      expect(patients[0].email).to eq('maria@example.com')
+      expect(patients[0].birthday).to eq('1985-10-20')
+      expect(patients[0].address).to eq('Avenida B, 456')
+      expect(patients[0].city).to eq('Rio de Janeiro')
+      expect(patients[0].state).to eq('RJ')
+      expect(patients[0].medical_crm).to eq('CRM54321')
+    end
+  end
 
   describe '#to_hash' do
     it 'retorna os atributos como um hash' do

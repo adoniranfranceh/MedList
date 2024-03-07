@@ -27,7 +27,7 @@ def create_table(conn)
         birthday DATE NOT NULL,
         address VARCHAR(255),
         city VARCHAR(100),
-        state VARCHAR(2),
+        state VARCHAR(20),
         medical_crm VARCHAR(20)
       );
     SQL

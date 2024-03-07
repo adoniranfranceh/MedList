@@ -20,12 +20,14 @@ window.onload = () => {
     patientMedicalCrm.textContent = patient.medical_crm;
 
     patientList.style.display = 'none';
+    searchInput.style.display = 'none';
     patientDetails.style.display = 'block';
   };
 
   const goBackToList = () => {
     patientDetails.style.display = 'none';
     patientList.style.display = 'block';
+    searchInput.style.display = 'block';
   };
 
   backButton.addEventListener('click', goBackToList);
@@ -36,6 +38,7 @@ window.onload = () => {
     fetch(`${url}?search=${encodeURIComponent(searchTerm)}`)
       .then(response => response.json())
       .then(data => {
+        console.log(data)
         patientList.innerHTML = '';        data.patients.forEach(patient => {
           const li = document.createElement('li');
           li.textContent = patient.name;
@@ -53,6 +56,7 @@ window.onload = () => {
   fetch(url)
     .then(response => response.json())
     .then(data => {
+      console.log(data)
       data.patients.forEach(patient => {
         const li = document.createElement('li');
         li.textContent = patient.name;

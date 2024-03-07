@@ -1,21 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <h1>Lista Médica</h1>
-  <input type="text" id="search-input" placeholder="Digite sua pesquisa...">
+  <div class="container">
+    <header>
+      <h1>Lista Médica</h1>
+    </header>
 
-  <div id="app">
-    <ul id="patient-list"></ul>
-    <div id="patient-details" style="display: none;">
-      <button id="back-button">Voltar</button>
-      <h2 id="patient-name"></h2>
-      <p><strong>CPF:</strong> <span id="patient-cpf"></span></p>
-      <p><strong>Email:</strong> <span id="patient-email"></span></p>
-      <p><strong>Data de Nascimento:</strong> <span id="patient-birthday"></span></p>
-      <p><strong>Endereço:</strong> <span id="patient-address"></span></p>
-      <p><strong>CRM Médico:</strong> <span id="patient-medical-crm"></span></p>
+    <input type="text" id="search-input" placeholder="Digite sua pesquisa...">
+
+    <div id="app">
+      <ul id="patient-list"></ul>
+      <div id="patient-details" >
+        <button id="back-button">X</button>
+        <h3 id="patient-name"></h3  >
+        <p><strong>CPF:</strong> <span id="patient-cpf"></span></p>
+        <p><strong>Email:</strong> <span id="patient-email"></span></p>
+        <p><strong>Data de Nascimento:</strong> <span id="patient-birthday"></span></p>
+        <p><strong>Endereço:</strong> <span id="patient-address"></span></p>
+        <p><strong>CRM Médico:</strong> <span id="patient-medical-crm"></span></p>
+      </div>
     </div>
   </div>
 
