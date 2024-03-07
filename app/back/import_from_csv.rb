@@ -46,4 +46,8 @@ def insert_patient(conn, data)
 end
 
 conn = PG.connect(DB_PARAMS)
+start_time = Time.now
 import_from_csv('data/data.csv', conn)
+end_time = Time.now
+
+puts end_time - start_time 

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'Usuário vê lista médica' do
   it 'com sucesso' do
-    file_path = File.expand_path('../json/patients.json', __dir__)
+    file_path = File.expand_path('../../json/patients.json', __dir__)
     initial_json_data = JSON.parse(File.read(file_path))
 
     allow(Patient).to receive(:all).and_return(initial_json_data)

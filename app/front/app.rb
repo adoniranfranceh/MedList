@@ -12,5 +12,5 @@ end
 
 get '/styles.css' do
   content_type 'text/css'
-  send_file 'app/front/styles.css'
+  File.open('app/front/styles.css')
 end

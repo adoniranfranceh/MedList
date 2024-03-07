@@ -1,5 +1,4 @@
 require_relative '../../app/back/models/patient'
-require_relative '../../app/back/import_from_csv'
 
 describe Patient do
   describe '#initialize' do

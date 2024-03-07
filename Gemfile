@@ -2,11 +2,13 @@
 
 source "https://rubygems.org"
 
+gem 'capybara'
 gem 'sinatra'
 gem 'puma'
 gem 'rackup'
 gem 'rack'
 gem 'pg'
+gem 'cuprite'
 
 group :test do
   gem 'rspec'
