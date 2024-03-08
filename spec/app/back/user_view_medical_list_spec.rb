@@ -19,7 +19,7 @@ describe 'Usuário vê lista médica' do
     expect(response_data.dig('patients', 0, 'address')).to eq('Rua A, 123')
     expect(response_data.dig('patients', 0, 'city')).to eq('São Paulo')
     expect(response_data.dig('patients', 0, 'state')).to eq('SP')
-    expect(response_data.dig('patients', 0, 'medical_crm')).to eq('CRM12345')
+    expect(response_data.dig('patients', 0, 'doctor', 'crm')).to eq('CRM12345')
 
     expect(response_data.dig('patients', 1, 'name')).to eq('Maria Souza')
     expect(response_data.dig('patients', 1, 'cpf')).to eq('987.654.321-98')
@@ -28,7 +28,7 @@ describe 'Usuário vê lista médica' do
     expect(response_data.dig('patients', 1, 'address')).to eq('Avenida B, 456')
     expect(response_data.dig('patients', 1, 'city')).to eq('Rio de Janeiro')
     expect(response_data.dig('patients', 1, 'state')).to eq('RJ')
-    expect(response_data.dig('patients', 1, 'medical_crm')).to eq('CRM54321')
+    expect(response_data.dig('patients', 1, 'doctor', 'crm')).to eq('CRM54321')
   end
 
   it 'e está vazia' do

@@ -102,3 +102,50 @@ body {
   margin-top: 50px;
   color: #333;
 }
+
+#doctor-details {
+  display: none;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+#doctor-details h4 {
+  margin-top: 0;
+}
+
+#doctor-details p {
+  margin: 5px 0;
+}
+
+#doctor-details strong {
+  font-weight: bold;
+}
+
+#doctor-details span {
+  color: #333;
+}
+
+#patient-tests {
+  margin-top: 20px;
+}
+
+#patient-tests h4 {
+  margin-top: 0;
+}
+
+#tests-list {
+  padding: 0;
+  margin: 0;
+}
+
+#tests-list li {
+  list-style: none;
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+#tests-list li:last-child {
+  border-bottom: none;
+}

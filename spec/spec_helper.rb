@@ -11,8 +11,8 @@ require 'capybara/rspec'
 require 'capybara/cuprite'
 
 require_relative '../app/back/app'
-require_relative '../app/back/import_from_csv'
 require 'reset_database'
+require_relative 'database_setup'
 
 Capybara.javascript_driver = :cuprite
 Capybara.default_driver = :cuprite
@@ -28,6 +28,14 @@ RSpec.configure do |config|
   config.include Capybara::DSL
 
   config.before(:each) do
+    require_relative '../app/back/helpers/database_helper.rb'
+    config.include DatabaseHelper
+    connect_to_database(:test)
+
+    database_setup
+  end
+
+  config.after(:each) do
     reset_database
   end
 

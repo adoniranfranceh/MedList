@@ -28,7 +28,15 @@ def create_table(conn)
         address VARCHAR(255),
         city VARCHAR(100),
         state VARCHAR(20),
-        medical_crm VARCHAR(20)
+        medical_crm VARCHAR(20),
+        doctor_crm_state VARCHAR(20),
+        doctor_name VARCHAR(255),
+        doctor_email VARCHAR(255),
+        result_token VARCHAR(255),
+        result_date DATE,
+        test_type VARCHAR(255),
+        test_limits VARCHAR(255),
+        test_result VARCHAR(255)
       );
     SQL
     puts "Tabela 'patients' criada com sucesso!"

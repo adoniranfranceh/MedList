@@ -9,7 +9,11 @@ window.onload = () => {
   const patientEmail = document.getElementById('patient-email');
   const patientBirthday = document.getElementById('patient-birthday');
   const patientAddress = document.getElementById('patient-address');
-  const patientMedicalCrm = document.getElementById('patient-medical-crm');
+  const testsList = document.getElementById('tests-list');
+  const doctorName = document.getElementById('doctor-name')
+  const doctorCrm = document.getElementById('doctor-crm')
+  const doctorCrmState = document.getElementById('doctor-crm-state')
+  doctorDetails = document.getElementById('doctor-details')
 
   const showPatientDetails = (patient) => {
     patientName.textContent = patient.name;
@@ -17,12 +21,23 @@ window.onload = () => {
     patientEmail.textContent = patient.email;
     patientBirthday.textContent = patient.birthday;
     patientAddress.textContent = `${patient.address}, ${patient.city} - ${patient.state}`;
-    patientMedicalCrm.textContent = patient.medical_crm;
 
+    doctorName.textContent = patient.doctor.name;
+    doctorCrm.textContent = patient.doctor.crm;
+    doctorCrmState.textContent = patient.doctor.crm_state;
+    doctorDetails.style.display = 'block';
+
+    testsList.innerHTML = '';
+    patient.tests.forEach(test => {
+      const li = document.createElement('li');
+      li.textContent = `${test.type}: ${test.result} (${test.limits})`;
+      testsList.appendChild(li);
+    });
+  
     patientList.style.display = 'none';
     searchInput.style.display = 'none';
     patientDetails.style.display = 'block';
-  };
+  };  
 
   const goBackToList = () => {
     patientDetails.style.display = 'none';
@@ -38,8 +53,8 @@ window.onload = () => {
     fetch(`${url}?search=${encodeURIComponent(searchTerm)}`)
       .then(response => response.json())
       .then(data => {
-        console.log(data)
-        patientList.innerHTML = '';        data.patients.forEach(patient => {
+        patientList.innerHTML = '';
+        data.patients.forEach(patient => {
           const li = document.createElement('li');
           li.textContent = patient.name;
           li.addEventListener('click', () => {
@@ -56,7 +71,6 @@ window.onload = () => {
   fetch(url)
     .then(response => response.json())
     .then(data => {
-      console.log(data)
       data.patients.forEach(patient => {
         const li = document.createElement('li');
         li.textContent = patient.name;

@@ -9,18 +9,27 @@
       <h1>Lista Médica</h1>
     </header>
 
-    <input type="text" id="search-input" placeholder="Digite sua pesquisa...">
+    <input type="text" id="search-input" placeholder="Busca rápida por nome">
 
     <div id="app">
       <ul id="patient-list"></ul>
       <div id="patient-details" >
         <button id="back-button">X</button>
-        <h3 id="patient-name"></h3  >
+        <h3 id="patient-name"></h3>
         <p><strong>CPF:</strong> <span id="patient-cpf"></span></p>
         <p><strong>Email:</strong> <span id="patient-email"></span></p>
         <p><strong>Data de Nascimento:</strong> <span id="patient-birthday"></span></p>
         <p><strong>Endereço:</strong> <span id="patient-address"></span></p>
-        <p><strong>CRM Médico:</strong> <span id="patient-medical-crm"></span></p>
+        <div id="doctor-details">
+          <h4>Médico:</h4>
+          <p><strong>Nome:</strong> <span id="doctor-name"></span></p>
+          <p><strong>CRM:</strong> <span id="doctor-crm"></span></p>
+          <p><strong>Estado CRM:</strong> <span id="doctor-crm-state"></span></p>
+        </div>
+        <div id="patient-tests">
+          <h4>Testes:</h4>
+          <ul id="tests-list"></ul>
+        </div>
       </div>
     </div>
   </div>

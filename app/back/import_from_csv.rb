@@ -1,53 +1,84 @@
 require 'pg'
 require 'csv'
 require_relative 'create_tables'
+require_relative 'helpers/database_helper'
 
 TABLE_NAME = 'patients'.freeze
 
-def table_exists?(conn, table_name)
-  result = conn.exec("SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = '#{table_name}');")
-  result.getvalue(0, 0) == 't'
-end
-
-def import_from_csv(file_path, conn)
-  create_table(conn) unless table_exists?(conn, TABLE_NAME)
-
-  begin
-    CSV.foreach(file_path, headers: true, col_sep: ';') do |row|
-      next if cpf_exists?(conn, row['cpf'])
-      insert_patient(conn, row)
-    end
-    puts "Dados importados com sucesso!"
-  rescue PG::Error => e
-    puts "Erro ao importar dados do CSV: #{e.message}"
+class DatabaseConnection
+  extend DatabaseHelper
+  def self.connection
+    connect_to_database(ENV['RACK_ENV'].to_sym)
   end
 end
 
-def cpf_exists?(conn, cpf)
-  result = conn.exec_params('SELECT COUNT(*) FROM patients WHERE cpf = $1', [cpf])
-  count = result.getvalue(0, 0).to_i
-  count > 0
+class PatientDB
+  FIELDS_MAPPING = {
+    'cpf' => 'cpf',
+    'nome paciente' => 'name',
+    'email paciente' => 'email',
+    'data nascimento paciente' => 'birthday',
+    'endereço/rua paciente' => 'address',
+    'cidade paciente' => 'city',
+    'estado patiente' => 'state',
+    'crm médico' => 'medical_crm',
+    'crm médico estado' => 'doctor_crm_state',
+    'nome médico' => 'doctor_name',
+    'email médico' => 'doctor_email',
+    'token resultado exame' => 'result_token',
+    'data exame' => 'result_date',
+    'tipo exame' => 'test_type',
+    'limites tipo exame' => 'test_limits',
+    'resultado tipo exame' => 'test_result'
+  }.freeze
+
+  TABLE_NAME = 'patients'.freeze
+
+  def initialize(data)
+    @data = data.transform_keys { |key| FIELDS_MAPPING[key] }
+  end
+
+  def insert_into_database
+    conn = DatabaseConnection.connection
+    insert_query = "INSERT INTO #{TABLE_NAME} (#{fields}) VALUES (#{placeholders})"
+    conn.exec_params(insert_query, values)
+  end
+
+  private
+
+  def fields
+    @data.keys.join(', ')
+  end
+
+  def placeholders
+    (1..@data.size).map { |i| "$#{i}" }.join(', ')
+  end
+
+  def values
+    @data.values
+  end
 end
 
-def insert_patient(conn, data)
-  conn.exec_params(
-    'INSERT INTO patients (cpf, name, email, birthday, address, city, state, medical_crm) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
-    [
-      data['cpf'],
-      data['nome paciente'],
-      data['email paciente'],
-      data['data nascimento paciente'],
-      data['endereço/rua paciente'],
-      data['cidade paciente'],
-      data['estado patiente'],
-      data['crm médico']
-    ]
-  )
+def import_from_csv(file_path)
+  conn = DatabaseConnection.connection
+  patients = []
+
+  CSV.foreach(file_path, headers: true, col_sep: ';') do |row|
+    patient_data = row.to_h
+    patients << PatientDB.new(patient_data)
+  end
+
+  conn.transaction do
+    patients.each(&:insert_into_database)
+  end
+
+  puts "Dados importados com sucesso!"
+rescue PG::Error => e
+  puts "Erro ao importar dados do CSV: #{e.message}"
 end
 
-conn = PG.connect(DB_PARAMS)
 start_time = Time.now
-import_from_csv('data/data.csv', conn)
+import_from_csv('data/data.csv')
 end_time = Time.now
 
 puts end_time - start_time 

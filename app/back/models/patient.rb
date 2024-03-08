@@ -1,61 +1,102 @@
-class Patient
-  attr_reader :id, :cpf, :name, :email, :birthday, :address, :city, :state, :medical_crm
+require_relative 'doctor'
+require_relative 'test'
+require_relative '../helpers/database_helper'
 
-  def initialize(id:, cpf:, name:, email:, birthday:, address:, city:, state:, medical_crm:)
-    @id = id
+class Patient
+  extend DatabaseHelper
+  attr_reader :result_token, :result_date, :cpf, :name, :email, :address, :city, :state, :birthday, :doctor, :tests
+
+  def initialize(result_token:, result_date:, cpf:, name:, email:, address:, city:, state:, birthday:, doctor:, tests: [])
+    @result_token = result_token
+    @result_date = result_date
     @cpf = cpf
     @name = name
     @email = email
-    @birthday = birthday
     @address = address
     @city = city
     @state = state
-    @medical_crm = medical_crm
+    @birthday = birthday
+    @doctor = doctor
+    @tests = tests
   end
 
   def self.all
-    conn = PG.connect(dbname: 'postgres', user: 'postgres', password: 'postgres', host: 'db')
-
-    result = conn.exec("SELECT * FROM patients")
-    patients_from_result(result)
+    result = execute_query("SELECT * FROM patients")
+    patients_with_tests_from_result(result)
   end
 
   def self.search(term)
-    conn = PG.connect(dbname: 'postgres', user: 'postgres', password: 'postgres', host: 'db')
-
-    result = conn.exec_params("SELECT * FROM patients WHERE name ILIKE $1", ["%#{term}%"])
-    patients_from_result(result)
+    result = execute_query("SELECT * FROM patients WHERE name ILIKE $1", ["%#{term}%"])
+    patients_with_tests_from_result(result)
   end
 
   def to_hash
     {
-      id: @id,
+      result_token: @result_token,
+      result_date: @result_date,
       cpf: @cpf,
       name: @name,
       email: @email,
-      birthday: @birthday,
       address: @address,
       city: @city,
       state: @state,
-      medical_crm: @medical_crm
+      birthday: @birthday,
+      doctor: @doctor.to_hash,
+      tests: @tests.map(&:to_hash)
     }
   end
 
-  private
-
-  def self.patients_from_result(result)
-    result.map do |row|
-      new(
-        id: row['id'],
-        cpf: row['cpf'],
-        name: row['name'],
-        email: row['email'],
-        birthday: row['birthday'],
-        address: row['address'],
-        city: row['city'],
-        state: row['state'],
-        medical_crm: row['medical_crm']
-      )
+  def self.execute_query(sql, params = [])
+    conn = connect_database
+    begin
+      result = conn.exec_params(sql, params)
+    ensure
+      conn.close if conn
     end
+    result
+  end  
+
+  def self.connect_database
+    connect_to_database(ENV['RACK_ENV'].to_sym)
+  end
+
+  def self.patients_with_tests_from_result(result)
+    patients = {}
+
+    result.each do |row|
+      cpf = row['cpf']
+      patient = patients[cpf]
+
+      unless patient
+        patient = new(
+          result_token: row['result_token'],
+          result_date: row['result_date'],
+          cpf: cpf,
+          name: row['name'],
+          email: row['email'],
+          address: row['address'],
+          city: row['city'],
+          state: row['state'],
+          birthday: row['birthday'],
+          doctor: Doctor.new(
+            crm: row['medical_crm'],
+            crm_state: row['doctor_crm_state'],
+            name: row['doctor_name']
+          ),
+          tests: []
+        )
+        patients[cpf] = patient
+      end
+
+      test_data = {
+        type: row['test_type'],
+        limits: row['test_limits'],
+        result: row['test_result']
+      }
+
+      patient.tests << test_data unless patient.tests.any? { |test| test[:type] == test_data[:type] }
+    end
+
+    patients.values
   end
 end
