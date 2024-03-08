@@ -13,6 +13,7 @@ require 'capybara/cuprite'
 require_relative '../app/back/app'
 require 'reset_database'
 require_relative 'database_setup'
+require_relative '../app/back/helpers/database_helper.rb'
 
 Capybara.javascript_driver = :cuprite
 Capybara.default_driver = :cuprite
@@ -27,16 +28,20 @@ RSpec.configure do |config|
 
   config.include Capybara::DSL
 
-  config.before(:each) do
-    require_relative '../app/back/helpers/database_helper.rb'
-    config.include DatabaseHelper
-    connect_to_database(:test)
+  config.include DatabaseHelper
 
-    database_setup
+  config.before(:each) do
+    conn = connect_to_database(ENV['RACK_ENV'].to_sym)
+
+    database_setup(conn)
   end
 
   config.after(:each) do
-    reset_database
+    connection_test = 'test'
+    if ENV['RACK_ENV'] == connection_test
+      conn = connect_to_database(ENV['RACK_ENV'].to_sym)
+      reset_database(conn, 'patients')
+    end
   end
 
   def app

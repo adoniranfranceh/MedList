@@ -30,21 +30,12 @@ def load_patients_data_from_json(file_path)
   JSON.parse(json_data)
 end
 
-def database_setup
-  conn = PG.connect(
-    dbname: 'myapp_test',
-    user: 'postgres',
-    password: 'postgres',
-    host: 'db_test',
-    port: 5432
-  )
+def database_setup(conn)
 
-  create_patients_table(conn) unless table_exists?(conn, 'patients')
+  create_table(conn) unless table_exists?(conn, 'patients')
 
   file_path = File.expand_path('json/patients.json', __dir__)
   patients_data = load_patients_data_from_json(file_path)
 
   insert_patients_data(conn, patients_data)
-
-  conn.close
 end

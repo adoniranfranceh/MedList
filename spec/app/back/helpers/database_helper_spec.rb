@@ -1,3 +1,5 @@
+require_relative '../../../../app/back/database_connection'
+
 describe 'table_exists?' do
   it 'retorna true se a tabela existir no banco de dados' do
     conn = double('PG::Connection')
@@ -15,6 +17,28 @@ describe 'table_exists?' do
     allow(conn).to receive(:exec_params).and_return(query_result)
 
     expect(table_exists?(conn, 'other_table')).to eq(false)
+  end
+end
+
+describe '#schema_exists?' do
+  context 'when the schema exists' do
+    it 'returns true' do
+      conn = double('PG::Connection')
+
+      allow(conn).to receive(:exec).and_return(double('PG::Result', getvalue: 't'))
+
+      expect(schema_exists?(conn, 'public')).to eq(true)
+    end
+  end
+
+  context 'when the schema does not exist' do
+    it 'returns false' do
+      conn = double('PG::Connection')
+
+      allow(conn).to receive(:exec).and_return(double('PG::Result', getvalue: 'f'))
+
+      expect(schema_exists?(conn, 'non_existing_schema')).to eq(false)
+    end
   end
 end
 
@@ -52,21 +76,31 @@ describe 'create_tables' do
 end
 
 describe '#connect_to_database' do
-  context 'when environment is :development' do
-    it 'calls connect_to_development_database' do
+  context 'quando o ambiente é :development' do
+    it 'chama connect_to_development_database' do
+      allow(ENV).to receive(:[]).with('RACK_ENV').and_return('connection_test')
+      allow(DatabaseConnection).to receive(:connection).and_return(double('PG::Connection', exec_params: true))
+
+      connect_to_database(:development)
+
       expect(self).to receive(:connect_to_development_database)
       connect_to_database(:development)
     end
   end
 
-  context 'when environment is :test' do
-    it 'calls connect_to_test_database' do
+  context 'quando o ambiente é :test' do
+    it 'chama connect_to_test_database' do
+      allow(ENV).to receive(:[]).with('RACK_ENV').and_return('connection_test')
+      allow(DatabaseConnection).to receive(:connection).and_return(double('PG::Connection', exec_params: true))
+
+      connect_to_database(:test)
+
       expect(self).to receive(:connect_to_test_database)
       connect_to_database(:test)
     end
   end
 
-  context 'when environment is not supported' do
+  context 'quando o ambiente é not supported' do
     it 'raises ArgumentError' do
       expect { connect_to_database(:production) }.to raise_error(ArgumentError)
     end

@@ -5,9 +5,9 @@ def truncate_table
   conn = DatabaseConnection.connection
 
   print "Tem certeza que deseja esvaziar a tabela 'patients'? (Sim/Não): "
-  resposta = gets.chomp.downcase
+  choice = gets.chomp.downcase
 
-  if resposta == 'sim' || resposta == 's'
+  if choice == 'sim' || choice == 's'
     conn.exec("TRUNCATE TABLE patients CASCADE;")
     puts "Tabela 'patients' esvaziada com sucesso!"
   else
