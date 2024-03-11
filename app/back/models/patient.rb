@@ -30,6 +30,11 @@ class Patient
     patients_with_tests_from_result(result)
   end
 
+  def self.search_per_token(term)
+    result = execute_query("SELECT * FROM patients WHERE result_token ILIKE $1", ["%#{term}%"])
+    patients_with_tests_from_result(result)
+  end
+
   def to_hash
     {
       result_token: @result_token,

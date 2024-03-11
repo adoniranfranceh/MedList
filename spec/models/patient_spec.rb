@@ -38,7 +38,7 @@ describe Patient do
       patients = Patient.all
 
       expect(patients.length).to eq(2)
-      expect(patients[0].result_token).to eq('1')
+      expect(patients[0].result_token).to eq('ABC1234')
       expect(patients[0].cpf).to eq('123.456.789-10')
       expect(patients[0].name).to eq('João da Silva')
       expect(patients[0].email).to eq('joao@example.com')
@@ -50,7 +50,7 @@ describe Patient do
       expect(patients[0].doctor.crm_state).to eq('ST')
       expect(patients[0].doctor.name).to eq('Dr. Smith')
     
-      expect(patients[1].result_token).to eq('2')
+      expect(patients[1].result_token).to eq('XYZ789')
       expect(patients[1].cpf).to eq('987.654.321-98')
       expect(patients[1].name).to eq('Maria Souza')
       expect(patients[1].email).to eq('maria@example.com')
@@ -68,7 +68,7 @@ describe Patient do
     it 'pesquisa por nome do paciente' do
       patients = Patient.search('Mari')
 
-      expect(patients[0].result_token).to eq('2')
+      expect(patients[0].result_token).to eq('XYZ789')
       expect(patients[0].cpf).to eq('987.654.321-98')
       expect(patients[0].name).to eq('Maria Souza')
       expect(patients[0].email).to eq('maria@example.com')
@@ -79,6 +79,24 @@ describe Patient do
       expect(patients[0].doctor.crm).to eq('CRM54321')
       expect(patients[0].doctor.crm_state).to eq('RJ')
       expect(patients[0].doctor.name).to eq('Dr. Johnson')
+    end
+  end
+
+  describe '.search_per_token' do
+    it 'pesquisa por nome do paciente' do
+      patients = Patient.search_per_token('ABC1234')
+
+      expect(patients[0].result_token).to eq('ABC1234')
+      expect(patients[0].cpf).to eq('123.456.789-10')
+      expect(patients[0].name).to eq('João da Silva')
+      expect(patients[0].email).to eq('joao@example.com')
+      expect(patients[0].birthday).to eq('1990-05-15')
+      expect(patients[0].address).to eq('Rua A, 123')
+      expect(patients[0].city).to eq('São Paulo')
+      expect(patients[0].state).to eq('SP')
+      expect(patients[0].doctor.crm).to eq('CRM12345')
+      expect(patients[0].doctor.crm_state).to eq('ST')
+      expect(patients[0].doctor.name).to eq('Dr. Smith')
     end
   end
 

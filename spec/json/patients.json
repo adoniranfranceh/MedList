@@ -1,6 +1,6 @@
 [
   {
-    "result_token": "1",
+    "result_token": "ABC1234",
     "result_date": "2024-03-07",
     "cpf": "123.456.789-10",
     "name": "João da Silva",
@@ -28,7 +28,7 @@
     ]
   },
   {
-    "result_token": "2",
+    "result_token": "XYZ789",
     "result_date": "2024-03-07",
     "cpf": "987.654.321-98",
     "name": "Maria Souza",

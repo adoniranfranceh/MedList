@@ -1,6 +1,5 @@
 require 'pg'
-require_relative '../../app/back/main'
-require_relative '../../app/back/data_importer'
+require_relative '../../../../app/back/data_importer'
 
 include DataImporter
 

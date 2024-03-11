@@ -9,6 +9,7 @@ gem 'rackup'
 gem 'rack'
 gem 'pg'
 gem 'cuprite'
+gem 'sidekiq'
 
 group :test do
   gem 'rspec'

@@ -11,6 +11,12 @@
 
     <input type="text" id="search-input" placeholder="Busca rápida por nome">
 
+    <form id="upload-form" action="http://localhost:4567/import" method="POST" enctype="multipart/form-data">
+      <input type="file" name="file" id="csv-file">
+      <button type="submit">Importar CSV</button>
+    </form>
+    <div id="processing-message" style="display:none;">Processando... Por favor, aguarde.</div>
+
     <div id="app">
       <ul id="patient-list"></ul>
       <div id="patient-details" >
