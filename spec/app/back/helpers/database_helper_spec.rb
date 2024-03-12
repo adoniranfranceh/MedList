@@ -1,5 +1,3 @@
-require_relative '../../../../app/back/database_connection'
-
 describe 'table_exists?' do
   it 'retorna true se a tabela existir no banco de dados' do
     conn = double('PG::Connection')

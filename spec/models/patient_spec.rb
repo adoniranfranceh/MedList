@@ -1,5 +1,3 @@
-require_relative '../../app/back/models/patient'
-
 describe Patient do
   let(:doctor) { Doctor.new(crm: 'CRM123', crm_state: 'SP', name: 'Dr. Smith') }
 

@@ -1,11 +1,8 @@
-require 'pg'
-require_relative '../../../../app/back/data_importer'
-
-include DataImporter
-
 describe 'import_from_csv' do
   it 'insere dados do CSV no banco de dados' do
-    expect { DataImporter.import_from_csv('data/data.csv') }.to output(/Dados importados com sucesso!/).to_stdout
+    file_path = File.expand_path('../../../csv/patients.csv', __dir__)
+
+    expect { DataImporter.import_from_csv(file_path) }.to output(/Dados importados com sucesso!/).to_stdout
   end
 
   it 'lida corretamente com erro ao importar dados do CSV' do

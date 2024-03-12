@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'pg'
 require_relative 'models/patient'
-require_relative 'jobs/worker_job'
+require_relative 'jobs/csv_import_job'
 require_relative 'helpers/csv_helper'
 
 include CSVHelper

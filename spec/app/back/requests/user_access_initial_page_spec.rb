@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'Usuário acessa página inicial' do
   it 'e vê mensagem' do
     get '/'

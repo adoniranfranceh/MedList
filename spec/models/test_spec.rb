@@ -1,5 +1,3 @@
-require_relative '../../app/back/models/test'
-
 RSpec.describe Test do
   describe '#initialize' do
     it 'cria uma nova instância de test' do

@@ -2,7 +2,7 @@ describe 'POST /import' do
   context 'with valid CSV file' do
     it 'returns success response with valid CSV file' do
       allow(CSVImportWorker).to receive(:perform_async)
-      file_path = File.expand_path('../../../../data/data.csv', __dir__)
+      file_path = File.expand_path('../../../csv/patients.csv', __dir__)
       csv_content = File.open(file_path)
   
 

@@ -13,7 +13,8 @@ require 'capybara/cuprite'
 require_relative '../app/back/app'
 require 'reset_database'
 require_relative 'database_setup'
-require_relative '../app/back/helpers/database_helper.rb'
+Dir[File.join(File.dirname(__FILE__), 'app/**/*.rb')].each { |file| require file }
+
 
 Capybara.javascript_driver = :cuprite
 Capybara.default_driver = :cuprite

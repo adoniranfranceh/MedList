@@ -1,5 +1,3 @@
-require_relative '../../app/back/models/doctor'
-
 RSpec.describe Doctor do
   describe '#initialize' do
     it 'cria um nova instância doctor' do

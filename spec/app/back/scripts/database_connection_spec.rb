@@ -1,5 +1,3 @@
-require_relative '../../../../app/back/database_connection'
-
 RSpec.describe DatabaseConnection do
   describe '.connection' do
     it 'retorna um objeto PG::Connection' do
