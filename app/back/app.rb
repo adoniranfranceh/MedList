@@ -13,6 +13,8 @@ post '/import' do
     file = params[:'csv-file'][:tempfile] if params[:'csv-file']
     raise 'Missing CSV file parameter.' unless file
 
+    p params.inspect
+
     file_name = params[:'csv-file'][:filename]
     raise 'Invalid file format. Only CSV files are allowed.' unless csv_file?(file_name)
 
@@ -24,6 +26,7 @@ post '/import' do
   rescue => e
     status 500
     body "Error importing CSV file: #{e.message}"
+    p e.message
   end
 end
 
@@ -34,9 +37,8 @@ end
 get '/tests' do
   content_type :json
   response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
-
-  if params['search']
-    patients = Patient.search(params['search'])
+  if params[:search]
+    patients = Patient.search(params[:search])
     { patients: patients.map(&:to_hash) }.to_json
   else
     data = Patient.all.any? ? Patient.all.map(&:to_hash) : { message: 'Não há lista médica' }

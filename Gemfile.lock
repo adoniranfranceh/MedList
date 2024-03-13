@@ -20,6 +20,12 @@ GEM
       ferrum (~> 0.14.0)
     diff-lcs (1.5.1)
     docile (1.4.0)
+    faraday (2.9.0)
+      faraday-net_http (>= 2.0, < 3.2)
+    faraday-multipart (1.0.4)
+      multipart-post (~> 2)
+    faraday-net_http (3.1.0)
+      net-http
     ferrum (0.14)
       addressable (~> 2.5)
       concurrent-ruby (~> 1.1)
@@ -27,8 +33,11 @@ GEM
       websocket-driver (>= 0.6, < 0.8)
     matrix (0.4.2)
     mini_mime (1.1.5)
+    multipart-post (2.4.0)
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
+    net-http (0.4.1)
+      uri
     nio4r (2.7.0)
     nokogiri (1.16.2-aarch64-linux)
       racc (~> 1.4)
@@ -93,6 +102,7 @@ GEM
       rack-session (>= 2.0.0, < 3)
       tilt (~> 2.0)
     tilt (2.3.0)
+    uri (0.13.0)
     webrick (1.8.1)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
@@ -111,6 +121,8 @@ PLATFORMS
 DEPENDENCIES
   capybara
   cuprite
+  faraday
+  faraday-multipart
   pg
   puma
   rack

@@ -1,17 +1,17 @@
 describe CSVHelper do
   context '#csv_file?' do
     it 'retorna true se o arquivo tiver extensão .csv' do
-      expect(csv_file?('data.csv')).to be_truthy
+      expect(CSVHelper.csv_file?('data.csv')).to be_truthy
     end
 
     it 'retorna false se o arquivo não tiver extensão .csv' do
-      expect(csv_file?('data.txt')).to be_falsey
+      expect(CSVHelper.csv_file?('data.txt')).to be_falsey
     end
   end
 
   context '#save_temp_file' do
     let(:file_content) { "Nome,Idade\nJoão,30\nMaria,25\n" }
-    let(:temp_file_path) { save_temp_file(file_content) }
+    let(:temp_file_path) { CSVHelper.save_temp_file(StringIO.new(file_content)) }
 
     it 'salva o conteúdo do arquivo temporário' do
       expect(File.exist?(temp_file_path)).to be_truthy

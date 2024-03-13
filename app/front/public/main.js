@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const url = 'http://localhost:4567/tests';
   const patientList = document.getElementById('patient-list');
   const patientDetails = document.getElementById('patient-details');
   const backButton = document.getElementById('back-button');
@@ -83,18 +82,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const formData = new FormData();
     formData.append('csv-file', file);
-    processingMessage.style.display = 'block';
     try {
-      const response = await fetch('http://localhost:4567/import', {
+      const response = await fetch('/import', {
         method: 'POST',
         body: formData
       });
       if (response.ok) {
+        processingMessage.style.display = 'block';
         setTimeout(() => {
           processingMessage.textContent = 'Dados enviados com sucesso';
           processingMessage.style.color = 'green';
           fetchDataAndUpdate();
-        }, 10000);
+        }, 7000);
       } else {
         throw new Error('Falha ao importar o CSV');
       }
@@ -106,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const fetchDataAndUpdate = async () => {
     try {
-      const response = await fetch(url);
+      const response = await fetch('/tests');
       if (!response.ok) {
         throw new Error('Erro ao buscar os dados dos pacientes');
       }
@@ -137,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const handleSearchInputChange = async () => {
     const searchTerm = searchInputPerName.value.trim();
     try {
-      const response = await fetch(`${url}?search=${encodeURIComponent(searchTerm)}`);
+      const response = await fetch(`/tests?search=${encodeURIComponent(searchTerm)}`);
       const data = await response.json();
       patientList.innerHTML = '';
       data.patients.forEach(patient => {
@@ -163,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const searchUrl = `http://localhost:4567/tests/${token}`;
+    const searchUrl = `/tests/${token}`;
 
     fetchAndDisplayPatients(searchUrl);
   });
