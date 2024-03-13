@@ -46,7 +46,7 @@ services:
     command: sidekiq -r ./app/back/jobs/sidekiq_initializer.rb
 
   redis:
-    image: redis 
+    image: redis
 
 volumes:
   postgres_data:

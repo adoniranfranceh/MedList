@@ -1,7 +1,7 @@
 describe Patient do
   let(:doctor) { Doctor.new(crm: 'CRM123', crm_state: 'SP', name: 'Dr. Smith') }
 
-  describe '#initialize' do
+  context '#initialize' do
     it 'define os atributos corretamente' do
       patient = Patient.new(
         result_token: '1',
@@ -31,7 +31,7 @@ describe Patient do
     end
   end
 
-  describe '.all' do
+  context '.all' do
     it 'retorna todos os pacientes do banco de dados' do
       patients = Patient.all
 
@@ -62,7 +62,7 @@ describe Patient do
     end
   end
 
-  describe '.search' do
+  context '.search' do
     it 'pesquisa por nome do paciente' do
       patients = Patient.search('Mari')
 
@@ -80,7 +80,7 @@ describe Patient do
     end
   end
 
-  describe '.search_per_token' do
+  context '.search_per_token' do
     it 'pesquisa por nome do paciente' do
       patients = Patient.search_per_token('ABC1234')
 
@@ -98,7 +98,7 @@ describe Patient do
     end
   end
 
-  describe '#to_hash' do
+  context '#to_hash' do
     it 'retorna os atributos como um hash' do
       patient = Patient.new(
         result_token: '1',

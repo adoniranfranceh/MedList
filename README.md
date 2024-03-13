@@ -1,8 +1,22 @@
 # MedList
 
-### Um projeto do Rebase Labs.
+## Um projeto do Rebase Labs.
 
 Este projeto utiliza o framework Sinatra para criar uma API web que consulta informações de pacientes armazenadas em um banco de dados PostgreSQL, tudo executado em contêineres Docker.
+Seguindo a extrutura
+
+## Arquitetura do Projeto
+O MedList adota uma arquitetura simples e eficaz, dividindo claramente o back-end do front-end:
+
+### Back-end (app/back/):
+
+Gerencia a lógica do servidor, endpoints da API e as operações no banco de dados.
+Inclui arquivos para importação de dados e configuração de conexão com o banco de dados.
+
+### Front-end (app/front/):
+
+Fornecer a interface do usuário.
+Comunica-se com o back-end por meio de chamadas de API para recuperar e exibir dados.
 
 ## Configuração do Ambiente
 
@@ -43,31 +57,46 @@ Para iniciar o projeto, siga estes passos:
     docker-compose exec app ruby app/back/truncate.rb
     ```
 
-   
 
 ## Executando Testes
 
 Você pode executar os testes da aplicação utilizando o comando abaixo:
 
 ```bash
-docker-compose exec app_front rspec
+docker-compose up -d
 ```
+
+```bash
+docker-compose exec app rspec
+```
+
+### Especificações dos Testes
+Antes de cada teste, o banco de dados é configurado com dados de teste para a tabela 'patients' a partir de um arquivo JSON em `spec/json/patients.json`, possibilitando chamadas ao model Patient nos cenários de teste. Após cada teste, o banco de dados é redefinido para garantir um ambiente limpo.
 
 ## Utilizando a Interface Gráfica
 
-Além da API, agora há uma interface gráfica disponível em `localhost:3000/home` que consome a API. A interface foi projetada como uma única página (single page), proporcionando uma experiência de usuário fluida e intuitiva.
+Além da API, agora há uma interface gráfica disponível em `localhost:3000/home` que consome as API's. A interface foi projetada como uma única página (single page), proporcionando uma experiência de usuário fluida e intuitiva.
 
 ### Listagem
-![Lista de Pacientes](https://github.com/adoniranfranceh/MedList/assets/116985618/7d86a484-ee1d-469c-92af-26d61c9f6012)
+![Lista de Pacientes](https://github.com/adoniranfranceh/MedList/assets/116985618/e7eb19c2-2a02-469a-8ad4-ea0dd0ce4024)
 
 ### Detalhes
 ![Detalhes do Paciente](https://github.com/adoniranfranceh/MedList/assets/116985618/e50ba6eb-5b3e-48f5-a13f-e388d7b224cd)
 
+### Importando Dados via CSV
+
+Você também pode importar dados via CSV enviado pela requisição ao endpoint `/import`. Para fazer isso, siga estas etapas:
+
+1. Na interface [http://localhost:3000/home](http://localhost:3000/home).
+2. Selecione o arquivo CSV com os dados a serem importados em "Escolher arquivo CSV".
+3. Clique no botão "Importar CSV".
 
 ## Rotas da API
 
 - **GET /tests**: Retorna a lista de pacientes em formato JSON, incluindo os resultados dos testes.
 - **GET /tests?search=Nome**: Retorna os pacientes cujos nomes correspondem à pesquisa.
+- **GET /tests/:token**: Retorna os pacientes cujos tokens correspondem à pesquisa.
+- **POST /import**: Aceita envio de arquivo CSV com a implentação de backgroundjob.
 
 ## Exemplo de Uso
 
@@ -137,3 +166,4 @@ Após iniciar os contêineres, você pode acessar a lista de pacientes em [http:
     }
   ]
 }
+```

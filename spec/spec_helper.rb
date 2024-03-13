@@ -13,14 +13,20 @@ require 'capybara/cuprite'
 require_relative '../app/back/app'
 require 'reset_database'
 require_relative 'database_setup'
-Dir[File.join(File.dirname(__FILE__), 'app/**/*.rb')].each { |file| require file }
 
+
+Capybara.register_driver(:cuprite) do |app|
+  Capybara::Cuprite::Driver.new(
+    app,
+    window_size: [1200, 800],
+    browser_options: { 'no-sandbox': nil },
+    inspector: true,
+    base_url: 'http://app_front:3000'
+  )
+end
 
 Capybara.javascript_driver = :cuprite
-Capybara.default_driver = :cuprite
-Capybara.register_driver :cuprite do |app|
-  Capybara::Cuprite::Driver.new(app, browser_options: { 'no-sandbox': nil })
-end
+
 #,  logger: STDOUT
 
 RSpec.configure do |config|

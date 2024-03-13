@@ -1,5 +1,5 @@
-RSpec.describe DatabaseConnection do
-  describe '.connection' do
+describe DatabaseConnection do
+  context '.connection' do
     it 'retorna um objeto PG::Connection' do
       connection = described_class.connection
       expect(connection).to be_an_instance_of(PG::Connection)

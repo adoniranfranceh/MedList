@@ -21,7 +21,7 @@ header h1 {
 #patient-list {
   list-style-type: none;
   padding: 0;
-  margin: 0;
+  margin: 10px 0px 10px 0px;
 }
 
 #patient-list li {
@@ -55,12 +55,12 @@ header h1 {
   margin-bottom: 20px;
 }
 
-#search-input {
+#search-inputs input {
   width: 80%;
   max-width: 300px;
   padding: 8px;
   font-size: 1em;
-  border: 1px solid #ccc;
+  border: 1px solid #741616;
   border-radius: 5px;
   margin: 20px auto;
   box-sizing: border-box;
@@ -148,4 +148,26 @@ body {
 
 #tests-list li:last-child {
   border-bottom: none;
+}
+
+#processing-message {
+  display: none;
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+#selected-file {
+  display: none;
+  margin-left: 10px;
+}
+
+.hidden-file-input {
+  display: none;
+}
+
+#search-link-name,
+#search-link-token {
+  color: #333;
+  text-decoration: underline;
+  cursor: pointer;
 }
