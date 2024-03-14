@@ -45,7 +45,7 @@ describe 'Usuário vê lista médica' do
     visit '/home'
 
     fill_in 'search-input-per-name', with: 'Lara Guedes'
-    sleep 1
+    sleep 2
 
     expect(page).to have_css('#patient-list li', count: 1)
     expect(page).to have_content('Lara Guedes')
@@ -57,7 +57,7 @@ describe 'Usuário vê lista médica' do
 
     click_on 'Pesquisar por token'
     fill_in 'search-input-per-token', with: '0W9I67'
-    sleep 1
+    sleep 2
 
     expect(page).to have_css('#patient-list li', count: 1)
     expect(page).to have_content('Juliana dos Reis Filho')

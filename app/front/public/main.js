@@ -162,14 +162,20 @@ document.addEventListener('DOMContentLoaded', () => {
       const response = await fetch(`/tests?search=${encodeURIComponent(searchTerm)}`);
       const data = await response.json();
       patientList.innerHTML = '';
-      data.patients.forEach(patient => {
-        const li = document.createElement('li');
-        li.textContent = patient.name;
-        li.addEventListener('click', () => {
-          showPatientDetails(patient);
+      if (data.patients && data.patients.length > 0) {
+        data.patients.forEach(patient => {
+          const li = document.createElement('li');
+          li.textContent = patient.name;
+          li.addEventListener('click', () => {
+            showPatientDetails(patient);
+          });
+          patientList.appendChild(li);
         });
-        patientList.appendChild(li);
-      });
+      }else{
+        const h3 = document.createElement('h3');
+        h3.textContent = 'Nenhum resultado para a busca por nome';
+        patientList.appendChild(h3);
+      }
     } catch (error) {
       console.error('Erro ao buscar resultados da pesquisa:', error);
     }
@@ -195,14 +201,20 @@ document.addEventListener('DOMContentLoaded', () => {
       const response = await fetch(searchUrl);
       const data = await response.json();
       patientList.innerHTML = '';
-      data.patients.forEach(patient => {
-        const li = document.createElement('li');
-        li.textContent = patient.name;
-        li.addEventListener('click', () => {
-          showPatientDetails(patient);
+      if(data.patients && data.patients.length > 0){
+        data.patients.forEach(patient => {
+          const li = document.createElement('li');
+          li.textContent = patient.name;
+          li.addEventListener('click', () => {
+            showPatientDetails(patient);
+          });
+          patientList.appendChild(li);
         });
-        patientList.appendChild(li);
-      });
+      }else{
+        const h3 = document.createElement('h3');
+        h3.textContent = 'Nenhum resultado para a busca por token';
+        patientList.appendChild(h3);
+      }
     } catch (error) {
       console.error('Erro ao buscar resultados da pesquisa:', error);
     }
