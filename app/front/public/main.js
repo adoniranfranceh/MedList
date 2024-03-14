@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const searchInputPerToken = document.getElementById('search-input-per-token');
   const searchLinkToken = document.getElementById('search-link-token');
   const searchLinkName = document.getElementById('search-link-name');
+  const tokenResult = document.getElementById('token-result')
   const patientName = document.getElementById('patient-name');
   const patientCpf = document.getElementById('patient-cpf');
   const patientEmail = document.getElementById('patient-email');
@@ -18,9 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const doctorDetails = document.getElementById('doctor-details');
   const processingMessage = document.getElementById('processing-message');
   const uploadForm = document.getElementById('upload-form');
+  const uploadContainer = document.getElementById('upload-container')
 
   const showPatientDetails = (patient) => {
+    console.log(patient)
     patientName.textContent = patient.name;
+    tokenResult.textContent = patient.result_token;
     patientCpf.textContent = patient.cpf;
     patientEmail.textContent = patient.email;
     patientBirthday.textContent = patient.birthday;
@@ -42,6 +46,11 @@ document.addEventListener('DOMContentLoaded', () => {
     searchInputPerName.style.display = 'none';
     patientDetails.style.display = 'block';
     uploadForm.style.display = 'none';
+    uploadContainer.style.display = 'none';
+    searchInputPerName.style.display = 'none';
+    searchInputPerToken.style.display = 'none';
+    searchLinkName.style.display = 'none';
+    searchLinkToken.style.display = 'none';
   };
 
   const goBackToList = () => {
@@ -49,6 +58,9 @@ document.addEventListener('DOMContentLoaded', () => {
     patientList.style.display = 'block';
     searchInputPerName.style.display = 'block';
     uploadForm.style.display = 'block';
+    uploadContainer.style.display = 'block';
+    searchInputPerName.style.display = 'block';
+    searchLinkToken.style.display = 'block';
   };
 
   searchLinkToken.addEventListener('click', (event) => {
@@ -111,7 +123,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       const data = await response.json();
       patientList.innerHTML = '';
-      console.log('Mensagem de depuração aqui');
       if (data.patients && Array.isArray(data.patients)) {
         data.patients.forEach(patient => {
           const li = document.createElement('li');

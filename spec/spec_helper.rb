@@ -11,7 +11,6 @@ require 'capybara/rspec'
 require 'capybara/cuprite'
 
 require_relative '../app/back/app'
-require_relative '../app/front/app'
 
 require 'reset_database'
 require_relative 'database_setup'

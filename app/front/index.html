@@ -20,19 +20,23 @@
       <a href="#" id="search-link-name" class="hidden-file-input">Pesquisar por nome</a>
     </div>
 
-    <form id="upload-form" method="POST" enctype="multipart/form-data">
-      <input type="file" name="file" id="csv-file">
-      <button type="submit" id="upload-button">Importar CSV</button>
-    </form>
-    <div id="file-name"></div>
+    <div id="upload-container">
+      <form id="upload-form" method="POST" enctype="multipart/form-data">
+        <label for="csv-file" id="upload-label">Selecione um arquivo CSV</label><br>
+        <input type="file" name="file" id="csv-file" accept=".csv"><br>
+        <div id="file-name"></div>
+        <button type="submit" id="upload-button">Importar CSV</button>
+      </form>    
+    </div>
 
     <div id="processing-message" class="hidden-file-input">Processando... Por favor, aguarde.</div>
 
     <div id="app">
       <ul id="patient-list"></ul>
-      <div id="patient-details" >
+      <div id="patient-details">
         <button id="back-button">X</button>
         <h3 id="patient-name"></h3>
+        <h5 id="token-result"></h5>
         <p><strong>CPF:</strong> <span id="patient-cpf"></span></p>
         <p><strong>Email:</strong> <span id="patient-email"></span></p>
         <p><strong>Data de Nascimento:</strong> <span id="patient-birthday"></span></p>

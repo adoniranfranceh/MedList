@@ -19,6 +19,6 @@ describe 'POST /import' do
     post '/import', 'csv-file' => Rack::Test::UploadedFile.new(csv_content, 'text/csv')
 
     expect(last_response.status).to eq(500)
-    expect(last_response.body).to include('Error importing CSV file:')
+    expect(last_response.body).to include('Invalid file format. Only CSV files are allowed.')
   end
 end

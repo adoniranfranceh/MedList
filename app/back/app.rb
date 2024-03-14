@@ -13,8 +13,6 @@ post '/import' do
     file = params[:'csv-file'][:tempfile] if params[:'csv-file']
     raise 'Missing CSV file parameter.' unless file
 
-    p params.inspect
-
     file_name = params[:'csv-file'][:filename]
     raise 'Invalid file format. Only CSV files are allowed.' unless csv_file?(file_name)
 
@@ -26,7 +24,6 @@ post '/import' do
   rescue => e
     status 500
     body "Error importing CSV file: #{e.message}"
-    p e.message
   end
 end
 
