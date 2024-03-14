@@ -40,18 +40,18 @@ Para iniciar o projeto, siga estes passos:
     docker-compose up
     ```
 
-    Isso iniciará os contêineres Docker e o servidor estará acessível em http://localhost:4567.
+Isso iniciará todos os contêineres Docker, tornando o ambiente acessível em diferentes portas, dependendo da configuração do ambiente.
 
 3. Execute o arquivo `import_data.rb` para importar dados de pacientes do CSV localizado em `data/data.csv`:
 
     ```bash
-    docker-compose exec app ruby app/back/import_data.rb
+    docker-compose exec app_back ruby app/back/import_data.rb
     ```
 
-4. Delete todos os dados de pacientes
+   Você também pode deletar todos os dados de pacientes com o comando abaixo:
 
     ```bash
-    docker-compose exec app ruby app/back/truncate.rb
+    docker-compose exec app_back ruby app/back/truncate_table.rb 
     ```
 
 ## Executando Testes
@@ -69,11 +69,11 @@ docker-compose exec app_back rspec
 **OBS:** Os testes de sistema utilizam o banco de dados do ambiente de desenvolvimento. Certifique-se de que os dados no arquivo `data/data.csv` sigam o padrão esperado.
 
 ```bash
-  docker-compose exec app ruby app/back/import_data.rb
+  docker-compose exec app_back ruby app/back/import_data.rb
 ```
 
 ### Especificações dos Testes
-Antes de cada teste, o banco de dados é configurado com dados de teste para a tabela 'patients' a partir de um arquivo JSON em `spec/json/patients.json`, possibilitando chamadas ao model Patient nos cenários de teste de unidade e integração. Após cada teste, o banco de dados é redefinido para garantir um ambiente limpo.
+Antes de cada teste, o banco de dados é configurado com dados de teste para a tabela 'patients' a partir de um arquivo JSON em `spec/json/patients.json`, possibilitando chamadas ao model `Patient` nos cenários de teste de unidade e integração. Após cada teste, o banco de dados é redefinido para garantir um ambiente limpo.
 
 ## Utilizando a Interface Gráfica
 
@@ -91,9 +91,11 @@ Além da API, há uma interface gráfica disponível em `localhost:3000/home` qu
 
 Você também pode importar dados via CSV enviado pela requisição ao endpoint `/import`. Para fazer isso, siga estas etapas:
 
+Baixe o arquivo CSV [data.csv](https://github.com/adoniranfranceh/MedList/blob/main/data/data.csv) em sua máquina, e envie pelo formulário.
+
 1. Na interface [http://localhost:3000/home](http://localhost:3000/home).
-2. Selecione o arquivo CSV com os dados a serem importados em "Escolher arquivo CSV".
-3. Clique no botão "Importar CSV".
+2. Clique no botão "Importar CSV".
+3. Selecione o arquivo CSV com os dados a serem importados em "Escolher arquivo".
 
 ### Rotas da API
 
