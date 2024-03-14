@@ -8,19 +8,21 @@
     <header>
       <h1>Lista Médica</h1>
     </header>
+    <div id="processing-message" class="hidden-element">Processando... Por favor, aguarde.</div>
 
     <div id="search-inputs">
       <input type="text" id="search-input-per-name" placeholder="Busca rápida por nome">
 
-      <input type="text" id="search-input-per-token" placeholder="Busca rápida por token" class="hidden-file-input">
+      <input type="text" id="search-input-per-token" placeholder="Busca rápida por token" class="hidden-element">
     </div>
 
     <div>
       <a href="#" id="search-link-token">Pesquisar por token</a>
-      <a href="#" id="search-link-name" class="hidden-file-input">Pesquisar por nome</a>
+      <a href="#" id="search-link-name" class="hidden-element">Pesquisar por nome</a>
     </div>
 
-    <div id="upload-container">
+    <div id="upload-container" class="hidden-element">
+      <button id="close-upload-form">X</button>
       <form id="upload-form" method="POST" enctype="multipart/form-data">
         <label for="csv-file" id="upload-label">Selecione um arquivo CSV</label><br>
         <input type="file" name="file" id="csv-file" accept=".csv"><br>
@@ -29,7 +31,7 @@
       </form>    
     </div>
 
-    <div id="processing-message" class="hidden-file-input">Processando... Por favor, aguarde.</div>
+    <button id="show-upload-form">Importar CSV</button>
 
     <div id="app">
       <ul id="patient-list"></ul>

@@ -20,6 +20,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const processingMessage = document.getElementById('processing-message');
   const uploadForm = document.getElementById('upload-form');
   const uploadContainer = document.getElementById('upload-container')
+  const btnShowUploadForm = document.getElementById('show-upload-form')
+
+  btnShowUploadForm.addEventListener('click', function() {
+    uploadContainer.style.display = 'block';
+    btnShowUploadForm.style.display = 'none'
+  });
+
+  document.getElementById('close-upload-form').addEventListener('click', function() {
+    uploadContainer.style.display = 'none';
+    btnShowUploadForm.style.display = 'block'
+  });
 
   const showPatientDetails = (patient) => {
     console.log(patient)
@@ -51,6 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
     searchInputPerToken.style.display = 'none';
     searchLinkName.style.display = 'none';
     searchLinkToken.style.display = 'none';
+    btnShowUploadForm.style.display = 'none';
   };
 
   const goBackToList = () => {
@@ -58,9 +70,9 @@ document.addEventListener('DOMContentLoaded', () => {
     patientList.style.display = 'block';
     searchInputPerName.style.display = 'block';
     uploadForm.style.display = 'block';
-    uploadContainer.style.display = 'block';
     searchInputPerName.style.display = 'block';
     searchLinkToken.style.display = 'block';
+    btnShowUploadForm.style.display = 'block';
   };
 
   searchLinkToken.addEventListener('click', (event) => {
