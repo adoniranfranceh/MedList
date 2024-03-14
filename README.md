@@ -3,20 +3,17 @@
 ## Um projeto do Rebase Labs.
 
 Este projeto utiliza o framework Sinatra para criar uma API web que consulta informações de pacientes armazenadas em um banco de dados PostgreSQL, tudo executado em contêineres Docker.
-Seguindo a extrutura
 
 ## Arquitetura do Projeto
 O MedList adota uma arquitetura simples e eficaz, dividindo claramente o back-end do front-end:
 
 ### Back-end (app/back/):
 
-Gerencia a lógica do servidor, endpoints da API e as operações no banco de dados.
-Inclui arquivos para importação de dados e configuração de conexão com o banco de dados.
+Gerencia a lógica do servidor, endpoints da API e as operações no banco de dados. Inclui arquivos para importação de dados e configuração de conexão.
 
 ### Front-end (app/front/):
 
-Fornecer a interface do usuário.
-Comunica-se com o back-end por meio de chamadas de API para recuperar e exibir dados.
+Fornece a interface do usuário, comunicando-se com o back-end por meio de chamadas de API para recuperar e exibir dados.
 
 ## Configuração do Ambiente
 
@@ -48,7 +45,7 @@ Para iniciar o projeto, siga estes passos:
 3. Execute o arquivo `import_data.rb` para importar dados de pacientes do CSV localizado em `data/data.csv`:
 
     ```bash
-    docker-compose exec app ruby import_data.rb
+    docker-compose exec app ruby app/back/import_data.rb
     ```
 
 4. Delete todos os dados de pacientes
@@ -57,31 +54,38 @@ Para iniciar o projeto, siga estes passos:
     docker-compose exec app ruby app/back/truncate.rb
     ```
 
-
 ## Executando Testes
 
-Você pode executar os testes da aplicação utilizando o comando abaixo:
-
+#### Para executar os testes da aplicação, siga estas etapas:
+Garanta que os os containers estejam levantados:
 ```bash
 docker-compose up -d
 ```
+Execute os testes:
+```bash
+docker-compose exec app_back rspec
+```
+
+**OBS:** Os testes de sistema utilizam o banco de dados do ambiente de desenvolvimento. Certifique-se de que os dados no arquivo `data/data.csv` sigam o padrão esperado.
 
 ```bash
-docker-compose exec app rspec
+  docker-compose exec app ruby app/back/import_data.rb
 ```
 
 ### Especificações dos Testes
-Antes de cada teste, o banco de dados é configurado com dados de teste para a tabela 'patients' a partir de um arquivo JSON em `spec/json/patients.json`, possibilitando chamadas ao model Patient nos cenários de teste. Após cada teste, o banco de dados é redefinido para garantir um ambiente limpo.
+Antes de cada teste, o banco de dados é configurado com dados de teste para a tabela 'patients' a partir de um arquivo JSON em `spec/json/patients.json`, possibilitando chamadas ao model Patient nos cenários de teste de unidade e integração. Após cada teste, o banco de dados é redefinido para garantir um ambiente limpo.
 
 ## Utilizando a Interface Gráfica
 
-Além da API, agora há uma interface gráfica disponível em `localhost:3000/home` que consome as API's. A interface foi projetada como uma única página (single page), proporcionando uma experiência de usuário fluida e intuitiva.
+Além da API, há uma interface gráfica disponível em `localhost:3000/home` que consome as API's. A interface foi projetada como uma única página (single page), proporcionando uma experiência de usuário fluida e intuitiva.
 
 ### Listagem
-![Lista de Pacientes](https://github.com/adoniranfranceh/MedList/assets/116985618/e7eb19c2-2a02-469a-8ad4-ea0dd0ce4024)
+![Lista de Pacientes](https://github.com/adoniranfranceh/MedList/assets/116985618/ea731d70-dbc1-4084-a801-84aec3e51701)
 
 ### Detalhes
-![Detalhes do Paciente](https://github.com/adoniranfranceh/MedList/assets/116985618/e50ba6eb-5b3e-48f5-a13f-e388d7b224cd)
+![Detalhes do Paciente](https://github.com/adoniranfranceh/MedList/assets/116985618/7e58d865-d085-48cb-a3cf-851ae05443a2)
+
+## Utilizando a API
 
 ### Importando Dados via CSV
 
@@ -91,14 +95,14 @@ Você também pode importar dados via CSV enviado pela requisição ao endpoint 
 2. Selecione o arquivo CSV com os dados a serem importados em "Escolher arquivo CSV".
 3. Clique no botão "Importar CSV".
 
-## Rotas da API
+### Rotas da API
 
-- **GET /tests**: Retorna a lista de pacientes em formato JSON, incluindo os resultados dos testes.
-- **GET /tests?search=Nome**: Retorna os pacientes cujos nomes correspondem à pesquisa.
-- **GET /tests/:token**: Retorna os pacientes cujos tokens correspondem à pesquisa.
-- **POST /import**: Aceita envio de arquivo CSV com a implentação de backgroundjob.
+- **GET http://localhost:4567/tests**: Retorna a lista de pacientes em formato JSON, incluindo os resultados dos testes.
+- **GET http://localhost:4567/tests?search=Nome**: Retorna os pacientes cujos nomes correspondem à pesquisa.
+- **GET http://localhost:4567/tests/:token**: Retorna os pacientes cujos tokens correspondem à pesquisa.
+- **POST http://localhost:4567/import**: Aceita envio de arquivo CSV com a implentação de backgroundjob.
 
-## Exemplo de Uso
+### Exemplo de Uso
 
 Após iniciar os contêineres, você pode acessar a lista de pacientes em [http://localhost:4567/tests](http://localhost:4567/tests).
 
