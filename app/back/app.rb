@@ -6,8 +6,11 @@ require_relative 'helpers/csv_helper'
 
 include CSVHelper
 
-post '/import' do
+def permit_cors
   response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+end
+
+post '/import' do
 
   begin
     file = params[:'csv-file'][:tempfile] if params[:'csv-file']
@@ -33,19 +36,20 @@ end
 
 get '/tests' do
   content_type :json
-  response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+  permit_cors
   if params[:search]
     patients = Patient.search(params[:search])
     { patients: patients.map(&:to_hash) }.to_json
   else
-    data = Patient.all.any? ? Patient.all.map(&:to_hash) : { message: 'Não há lista médica' }
-    { patients: data }.to_json
+    patients = Patient.all
+    data = patients.any? ? patients.map(&:to_hash) : { message: 'Não há lista médica' }
+    { patients: data, count: data.length }.to_json
   end
 end
 
 get '/tests/:token' do
   content_type :json
-  response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+  permit_cors
 
   patients = Patient.search_per_token(params['token'])
   { patients: patients.map(&:to_hash) }.to_json
